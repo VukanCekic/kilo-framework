@@ -1,0 +1,28 @@
+{
+  "$schema": "https://app.kilo.ai/config.json",
+  "instructions": [
+    ".kilo/rules/formatting.md",
+    ".kilo/rules/security_blocks.md",
+    ".kilo/rules/session-memory.md",
+    ".kilo/rules/implement.md",
+    ".kilo/rules/debug.md"
+  ],
+  "compaction": {
+    "auto": true,
+    "threshold_percent": 80,
+    "prune": true,
+    "tail_turns": 2
+  },
+  "agent": {
+    "orchestrator": {
+      "mode": "primary",
+      "permission": {
+        "task": {
+          "*": "deny",
+          "01_architect": "allow",
+          "02_workhorse": "allow"
+        }
+      }
+    }
+  }
+}
