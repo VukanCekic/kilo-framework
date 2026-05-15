@@ -2,7 +2,7 @@
 
 This is the entry point for the **Kilo Custom Framework** — a structured, agent-driven system for AI-assisted software development inside Kilo Code.
 
-It enforces **systematic coding protocols**, **cross-session project memory**, and **clear separation between planning and execution**.
+It enforces **systematic coding protocols**, **cross-session project memory**, and a **three-tier agent topology**: Orchestrator (GPT-5.4) coordinates the session, delegates planning to the Planner (Kimi K2.6 via `01_architect`), and delegates execution to the Workhorse (GPT-5.4-mini via `02_workhorse`).
 
 ---
 
@@ -11,13 +11,9 @@ It enforces **systematic coding protocols**, **cross-session project memory**, a
 | Document                                     | Purpose                                                                            |
 | -------------------------------------------- | ---------------------------------------------------------------------------------- |
 | `README.md`                                  | Full user guide, example flows, troubleshooting                                    |
-| `.kilo/rules/implement.md`                   | 6-step systematic code protocol (analyze → plan → change → test → loop → optimize) |
-| `.kilo/rules/debug.md`                       | Diagnostic routine for persistent errors                                           |
-| `.kilo/rules/session-memory.md`              | How to save, load, and respect session summaries across sessions                   |
-| `.kilo/rules/formatting.md`                  | Code style: 2-space indentation, camelCase, JSDoc                                  |
-| `.kilo/rules/security_blocks.md`             | Restricted files that must never be read or edited                                 |
-| `.kilo/agents/01_architect.md`               | Planning & review agent definition                                                 |
-| `.kilo/agents/02_workhorse.md`               | Implementation & testing agent definition                                          |
+| `.kilo/agents/00_orchestrator.md`            | Primary session coordinator — delegates to Planner and Workhorse                   |
+| `.kilo/agents/01_architect.md`               | Planning & review agent definition (Planner)                                       |
+| `.kilo/agents/02_workhorse.md`               | Implementation & testing agent definition (Workhorse)                              |
 | `.kilo/rules/memory-bank/session-summary.md` | Auto-generated: last session recap                                                 |
 | `.kilo/rules/memory-bank/project-state.md`   | Living doc: module status, active workstreams, tech debt                           |
 | `.kilo/rules/memory-bank/tasks.md`           | Living doc: active, pending, completed, and blocked tasks                          |
@@ -40,17 +36,29 @@ Every session starts with one of three user actions. The AI must honor the seman
 
 ## Agents
 
-The orchestrator delegates tasks to two specialized agents. No other agents are permitted.
+The framework runs a **three-tier topology** — Orchestrator → Planner → Workhorse — with each tier mapped to a dedicated model.
 
-### @01_architect — Lead System Architect
+### Orchestrator (Primary mode)
 
-- **Role:** Analyze code, plan architecture, write docs, provide code reviews.
+- **Model:** **GPT-5.4**
+- **Role:** Coordinate the session. Analyze user intent, manage context and lifecycle, and delegate work to the Planner or Workhorse.
+- **When to use:** This is the default entry point. You interact with the Orchestrator for all requests.
+- **Delegation decisions:**
+  - Route to **Planner** for open-ended analysis, architecture design, code review, or ambiguous problems.
+  - Route to **Workhorse** for concrete implementation, refactoring, testing, or debugging tasks.
+  - Can execute quick memory-bank reads or lightweight edits directly instead of delegating.
+
+### @01_architect — Planner (Kimi K2.6)
+
+- **Model:** **Kimi K2.6**
+- **Role:** Deep codebase analysis. Accepts high-level intent and produces detailed, step-by-step implementation specs, including file dependencies, expected outputs, and edge-case analysis.
 - **When to use:** "Design the data model", "Review this PR", "Plan the migration", "How should we handle error states?"
 - **Permissions:** Ask before editing files or running bash commands (only `git diff` is allowed without ask).
 - **Session behavior:** Loads memory bank on start. Updates memory bank after architectural decisions.
 
-### @02_workhorse — Execution Workhorse
+### @02_workhorse — Execution Workhorse (GPT-5.4-mini)
 
+- **Model:** **GPT-5.4-mini**
 - **Role:** Receive specific technical requirements and implement them autonomously.
 - **When to use:** "Implement the auth service", "Refactor this module", "Write tests", "Debug the build failure"
 - **Permissions:** Full edit and bash access.

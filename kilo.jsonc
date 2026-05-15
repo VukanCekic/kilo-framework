@@ -1,6 +1,8 @@
 {
   "$schema": "https://app.kilo.ai/config.json",
   "instructions": [
+    ".kilo/setup-prompts/context.md",
+    "AGENTS.md",
     ".kilo/rules/formatting.md",
     ".kilo/rules/security_blocks.md",
     ".kilo/rules/session-memory.md",
