@@ -4,24 +4,25 @@
 > Updated after every significant implementation or architectural change.
 
 ## Project Overview
-<!-- High-level description of what this project does -->
-- **Name:** [Project Name]
-- **Tech Stack:** [List of core technologies]
-- **Current Phase:** [planning | prototyping | development | testing | maintenance]
+
+- **Name:** Kilo Custom Framework
+- **Tech Stack:** Kilo Code CLI/Extension, Markdown, JSONC
+- **Current Phase:** development / stabilization
 
 ## Module Status
-<!-- Status of major modules/components -->
+
 | Module | Status | Notes |
 |--------|--------|-------|
-| [Module 1] | [stable / in-progress / planned] | [brief note] |
-| [Module 2] | [stable / in-progress / planned] | [brief note] |
+| Agent definitions (`kilo.jsonc`) | stable | Orchestrator, Planner, Workhorse pinned to distinct models |
+| Agent markdown (`.kilo/agents/`) | stable | System prompts for Planner + Workhorse |
+| Rules (`.kilo/rules/`) | stable | Formatting, security, session-memory, implement, debug protocols loaded |
+| Memory Bank (`.kilo/rules/memory-bank/`) | seeded | Templates filled with framework metadata |
+| Documentation (`README.md`, `AGENTS.md`) | stable | Consolidated QUICKSTART + kilo-framework-readme into single README |
 
 ## Active Branches / Workstreams
-<!-- Current parallel workstreams if any -->
-- [Workstream 1: description]
-- [Workstream 2: description]
+
+- Subagent model verification — confirm `@01_architect` and `@02_workhorse` spawn correct models in chat
 
 ## Known Technical Debt
-<!-- Acknowledged shortcuts or debt items -->
-- [Debt 1: what and where]
-- [Debt 2: what and where]
+
+- No automated tests for config validation (relies on `kilo.jsonc` schema validation)
