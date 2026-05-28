@@ -10,14 +10,16 @@ How to talk to the Orchestrator so it routes your request correctly and uses the
 
 ---
 
-## Load `context.md` First
+## How the Framework Is Loaded
 
-Before every session or request, ensure `.kilo/setup-prompts/context.md` is loaded into the AI's context.
+The framework is pre-wired through `kilo.jsonc` and `AGENTS.md`. You do not need to paste any prompts manually.
 
-- **If using `kilo.jsonc`:** add `.kilo/setup-prompts/context.md` to the `instructions` array so it is injected automatically.
-- **If starting manually:** paste or attach `context.md` before your first message.
+- **`kilo.jsonc`** — Defines the Orchestrator, Planner, and Workhorse agents with their pinned models, permissions, and instruction sources.
+- **`AGENTS.md`** — Auto-loaded by Kilo Code as project-level guidelines. Contains the tier topology, delegation rules, and memory bank protocol.
+- **`.kilo/agents/*.md`** — System prompts for the Planner and Workhorse subagents.
+- **`.kilo/rules/*.md`** — Behavioral rules injected into every session (formatting, security, session memory, implementation protocol, debugging protocol).
 
-`context.md` contains the Orchestrator's behavioral contract — tier topology, delegation rules, task-tool spawning instructions, and the sub-agent context bridge. Without it, the Orchestrator will attempt to do planning or implementation itself instead of routing to the correct agent.
+Just start a session in the project root. The Orchestrator will already know how to route requests and manage the memory bank.
 
 ---
 

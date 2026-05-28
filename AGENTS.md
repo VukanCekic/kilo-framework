@@ -2,7 +2,7 @@
 
 This is the entry point for the **Kilo Custom Framework** — a structured, agent-driven system for AI-assisted software development inside Kilo Code.
 
-It enforces **systematic coding protocols**, **cross-session project memory**, and a **three-tier agent topology**: Orchestrator (GPT-5.4) coordinates the session, delegates planning to the Planner (Kimi K2.6 via `01_architect`), and delegates execution to the Workhorse (GPT-5.4-mini via `02_workhorse`).
+It enforces **systematic coding protocols**, **cross-session project memory**, and a **three-tier agent topology**: Orchestrator (Kimi K2.6) coordinates the session, delegates planning to the Planner (Kimi K2.6 via `01_architect`), and delegates execution to the Workhorse (GPT-5.4-mini via `02_workhorse`).
 
 ---
 
@@ -11,7 +11,7 @@ It enforces **systematic coding protocols**, **cross-session project memory**, a
 | Document                                     | Purpose                                                                            |
 | -------------------------------------------- | ---------------------------------------------------------------------------------- |
 | `README.md`                                  | Full user guide, example flows, troubleshooting                                    |
-| `.kilo/agents/00_orchestrator.md`            | Primary session coordinator — delegates to Planner and Workhorse                   |
+| `kilo.jsonc`                                 | Primary session coordinator — delegates to Planner and Workhorse                   |
 | `.kilo/agents/01_architect.md`               | Planning & review agent definition (Planner)                                       |
 | `.kilo/agents/02_workhorse.md`               | Implementation & testing agent definition (Workhorse)                              |
 | `.kilo/rules/memory-bank/session-summary.md` | Auto-generated: last session recap                                                 |
@@ -40,7 +40,7 @@ The framework runs a **three-tier topology** — Orchestrator → Planner → Wo
 
 ### Orchestrator (Primary mode)
 
-- **Model:** **GPT-5.4**
+- **Model:** **Kimi K2.6** (default; override via model selector if you need a more powerful model)
 - **Role:** Coordinate the session. Analyze user intent, manage context and lifecycle, and delegate work to the Planner or Workhorse.
 - **When to use:** This is the default entry point. You interact with the Orchestrator for all requests.
 - **Delegation decisions:**

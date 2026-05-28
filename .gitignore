@@ -1,0 +1,4 @@
+# Kilo framework local dependencies
+.kilo/node_modules/
+.kilo/package.json
+.kilo/package-lock.json

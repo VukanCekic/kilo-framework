@@ -119,7 +119,53 @@ Open the three files in `.kilo/rules/memory-bank/` and fill in your project basi
 - **`tasks.md`** — Seed it with your first few tasks.
 - **`session-summary.md`** — Leave as-is; it will be overwritten automatically.
 
-### 3. Start your first session
+### 3. Test the framework
+
+Verify that the three-tier topology is wired correctly and that each agent spawns with its pinned model.
+
+In the Kilo Code chat panel, invoke each agent and ask it to identify itself:
+
+```
+@01_architect What model are you running as? State your model name exactly.
+```
+
+Expected: `moonshotai/Kimi-K2.6-2026-04-20`
+
+```
+@02_workhorse What model are you running as? State your model name exactly.
+```
+
+Expected: `openai/gpt-5.4-mini`
+
+If an agent reports the Orchestrator's model instead of its own, the `model` field in `kilo.jsonc` is not being respected. Check that:
+- You are in the correct project root when starting the session.
+- The `model` provider slug is valid for your Kilo Gateway.
+
+### 4. Override models (optional)
+
+The framework pins **Kimi K2.6** as the default for both Orchestrator and Planner, and **GPT-5.4-mini** for the Workhorse. If you need a more powerful (or cheaper) model for a specific task, override per agent:
+
+**Via the VS Code model selector:**
+1. Open the agent switcher / model selector.
+2. Pick the agent you want to change (e.g., Orchestrator).
+3. Choose a different model (e.g., `openai/gpt-5.4`).
+4. The selector remembers your pick per agent across sessions.
+
+**Via `kilo.jsonc` (permanent):**
+
+```jsonc
+{
+  "agent": {
+    "orchestrator": {
+      "model": "openai/gpt-5.4"
+    }
+  }
+}
+```
+
+> **Tip:** Override sparingly. The defaults are chosen for cost-efficiency: Kimi K2.6 for reasoning/coordination, GPT-5.4-mini for high-volume code generation.
+
+### 5. Start your first session
 
 You have three entry points for every session:
 

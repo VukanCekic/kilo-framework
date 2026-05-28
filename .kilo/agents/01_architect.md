@@ -1,6 +1,6 @@
 ---
 description: Analyzes code, plans architecture, and writes documentation. Requires approval to act.
-mode: all
+mode: subagent
 temperature: 0.2
 permission:
   edit: ask

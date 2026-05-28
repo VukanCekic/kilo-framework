@@ -1,8 +1,6 @@
 {
   "$schema": "https://app.kilo.ai/config.json",
   "instructions": [
-    ".kilo/setup-prompts/context.md",
-    "AGENTS.md",
     ".kilo/rules/formatting.md",
     ".kilo/rules/security_blocks.md",
     ".kilo/rules/session-memory.md",
@@ -18,12 +16,37 @@
   "agent": {
     "orchestrator": {
       "mode": "primary",
+      "model": "moonshotai/Kimi-K2.6-2026-04-20",
       "permission": {
         "task": {
           "*": "deny",
           "01_architect": "allow",
           "02_workhorse": "allow"
         }
+      }
+    },
+    "01_architect": {
+      "description": "Analyzes code, plans architecture, and writes documentation. Requires approval to act.",
+      "mode": "subagent",
+      "model": "moonshotai/Kimi-K2.6-2026-04-20",
+      "temperature": 0.2,
+      "permission": {
+        "edit": "ask",
+        "bash": {
+          "*": "ask",
+          "git diff": "allow"
+        }
+      }
+    },
+    "02_workhorse": {
+      "description": "Autonomous coder that executes defined tasks, writes tests, and refactors files.",
+      "mode": "subagent",
+      "model": "openai/gpt-5.4-mini",
+      "temperature": 0.1,
+      "steps": 20,
+      "permission": {
+        "edit": "allow",
+        "bash": "allow"
       }
     }
   }

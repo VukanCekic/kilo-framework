@@ -40,7 +40,6 @@ Instead of re-explaining your codebase to the AI every session, the framework:
 ```
 .kilo/
 ├── agents/
-│   ├── 00_orchestrator.md   # Primary session coordinator
 │   ├── 01_architect.md      # Planning & review agent (Planner)
 │   └── 02_workhorse.md      # Implementation agent (Workhorse)
 └── rules/
@@ -68,7 +67,7 @@ The framework runs a **three-tier topology**, with each tier mapped to a dedicat
 
 | Tier | Agent | Purpose | Permissions | Model |
 |------|-------|---------|-------------|-------|
-| **Orchestrator** | Primary mode | Analyzes user intent, manages session lifecycle, delegates planning to Planner and execution to Workhorse | Full edit + bash | **GPT-5.4** |
+| **Orchestrator** | Primary mode | Analyzes user intent, manages session lifecycle, delegates planning to Planner and execution to Workhorse | Full edit + bash | **Kimi K2.6** (default; override via UI) |
 | **Planner** | `01_architect` | Deep codebase analysis, produces step-by-step implementation specs with file dependencies and expected outputs | Ask before edit/bash | **Kimi K2.6** |
 | **Workhorse** | `02_workhorse` | Receives approved plans, writes code, runs tests, verifies behavior | Full edit + bash | **GPT-5.4-mini** |
 
@@ -122,7 +121,44 @@ Open the three files in `.kilo/rules/memory-bank/` and fill in your project basi
 - **`tasks.md`** — Seed it with your first few tasks.
 - **`session-summary.md`** — Leave as-is; it will be overwritten automatically.
 
-### 3. Start your first session
+### 3. Test the framework
+
+Verify that agents spawn with their pinned models and that the delegation chain works.
+
+In the Kilo Code chat panel:
+
+```
+@01_architect What model are you running as?
+```
+
+Expected: `moonshotai/Kimi-K2.6-2026-04-20`
+
+```
+@02_workhorse What model are you running as?
+```
+
+Expected: `openai/gpt-5.4-mini`
+
+If an agent reports the Orchestrator's model instead, check that `kilo.jsonc` is in the project root and that the provider slug is valid.
+
+**Override models (optional):**
+
+The defaults are cost-optimized: Kimi K2.6 for reasoning, GPT-5.4-mini for code generation. To use a different model for a specific agent:
+
+- **Via the VS Code model selector:** Switch to the agent, pick a new model (e.g., `openai/gpt-5.4`), and the selector remembers it per agent.
+- **Via `kilo.jsonc` (permanent):**
+
+```jsonc
+{
+  "agent": {
+    "orchestrator": {
+      "model": "openai/gpt-5.4"
+    }
+  }
+}
+```
+
+### 4. Start your first session
 
 You have three entry points for every session:
 
