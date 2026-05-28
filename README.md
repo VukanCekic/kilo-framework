@@ -2,6 +2,8 @@
 
 A structured, agent-driven framework for AI-assisted software development that preserves project context across sessions and enforces systematic coding, testing, and debugging protocols.
 
+**New to this framework?** Start with [`QUICKSTART.md`](./QUICKSTART.md) — it has exact copy-paste prompts to verify subagent models and run your first Plan → Implement session.
+
 ---
 
 ## Table of Contents
@@ -99,31 +101,13 @@ The Memory Bank (`memory-bank/`) is the heart of cross-session continuity.
 
 ## Getting Started
 
-### 1. Place the framework in your project root
+1. **Place the framework in your project root** — Copy `.kilo/`, `AGENTS.md`, and `kilo.jsonc` into your workspace.
+2. **Seed the Memory Bank** — Open `.kilo/rules/memory-bank/project-state.md` and `.kilo/rules/memory-bank/tasks.md` and fill in your project info (the framework already includes starter examples).
+3. **Open `QUICKSTART.md`** — This is your copy-paste guide for the first session. It has exact prompts to verify models and run real tasks.
 
-Copy the entire framework directory into your project workspace:
+### Quick Verification (copy-paste these)
 
-```bash
-your-project/
-├── .kilo/              <-- place here
-├── src/
-├── package.json
-└── ...
-```
-
-### 2. Initialize the Memory Bank templates
-
-Open the three files in `.kilo/rules/memory-bank/` and fill in your project basics:
-
-- **`project-state.md`** — Add your tech stack, module list, and current phase.
-- **`tasks.md`** — Seed it with your first few tasks.
-- **`session-summary.md`** — Leave as-is; it will be overwritten automatically.
-
-### 3. Test the framework
-
-Verify that the three-tier topology is wired correctly and that each agent spawns with its pinned model.
-
-In the Kilo Code chat panel, invoke each agent and ask it to identify itself:
+In the Kilo Code chat panel:
 
 ```
 @01_architect What model are you running as? State your model name exactly.
@@ -137,45 +121,7 @@ Expected: `moonshotai/Kimi-K2.6-2026-04-20`
 
 Expected: `openai/gpt-5.4-mini`
 
-If an agent reports the Orchestrator's model instead of its own, the `model` field in `kilo.jsonc` is not being respected. Check that:
-- You are in the correct project root when starting the session.
-- The `model` provider slug is valid for your Kilo Gateway.
-
-### 4. Override models (optional)
-
-The framework pins **Kimi K2.6** as the default for both Orchestrator and Planner, and **GPT-5.4-mini** for the Workhorse. If you need a more powerful (or cheaper) model for a specific task, override per agent:
-
-**Via the VS Code model selector:**
-1. Open the agent switcher / model selector.
-2. Pick the agent you want to change (e.g., Orchestrator).
-3. Choose a different model (e.g., `openai/gpt-5.4`).
-4. The selector remembers your pick per agent across sessions.
-
-**Via `kilo.jsonc` (permanent):**
-
-```jsonc
-{
-  "agent": {
-    "orchestrator": {
-      "model": "openai/gpt-5.4"
-    }
-  }
-}
-```
-
-> **Tip:** Override sparingly. The defaults are chosen for cost-efficiency: Kimi K2.6 for reasoning/coordination, GPT-5.4-mini for high-volume code generation.
-
-### 5. Start your first session
-
-You have three entry points for every session:
-
-| Command | What Happens |
-|---------|--------------|
-| **Continue Project Task** | Loads `session-summary.md` into context and resumes where you left off |
-| **Start New Task** | Starts a clean session without loading previous context |
-| **End Session & Summarize** | Generates a summary and writes it to `session-summary.md` |
-
-> **Tip:** Always use "Continue Project Task" when returning to ongoing work. Use "Start New Task" for exploring unrelated ideas.
+See `QUICKSTART.md` for full walkthroughs (Plan → Implement, debugging, status checks, session lifecycle).
 
 ---
 
@@ -239,7 +185,7 @@ AI:  Loaded previous session summary. Project: e-commerce API.
 
 ```
 User: @01_architect I need to add a discount coupon system
-      to the checkout flow. Plan the architecture.
+       to the checkout flow. Plan the architecture.
 
 Architect:
   1. Reads .kilo/rules/memory-bank/project-state.md
@@ -262,7 +208,7 @@ User: Looks good. Proceed.
 
 ```
 User: @02_workhorse Implement the coupon system exactly as
-      the architect planned. Start with the database schema.
+       the architect planned. Start with the database schema.
 
 Workhorse:
   [Step 1] Analyze Code
@@ -329,7 +275,7 @@ AI:  Previous session: implementing CouponService. Next step
 
 ```
 User: The checkout total is wrong when a percentage coupon
-      is applied. It's double-discounting.
+       is applied. It's double-discounting.
 ```
 
 #### Step 3: Workhorse enters debug mode
@@ -396,7 +342,7 @@ User: [Click "Start New Task"]
 AI:  Starting clean session. No previous summary loaded.
 
 User: What if we rewrote the entire checkout module in Rust?
-      Don't touch any files, just explore the idea.
+       Don't touch any files, just explore the idea.
 
 Architect: [Analyzes codebase and gives a feasibility report
             without making any changes]

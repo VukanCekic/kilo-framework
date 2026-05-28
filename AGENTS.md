@@ -11,6 +11,7 @@ It enforces **systematic coding protocols**, **cross-session project memory**, a
 | Document                                     | Purpose                                                                            |
 | -------------------------------------------- | ---------------------------------------------------------------------------------- |
 | `README.md`                                  | Full user guide, example flows, troubleshooting                                    |
+| `QUICKSTART.md`                              | Copy-paste prompts to verify the framework and run your first Plan → Implement cycle |
 | `kilo.jsonc`                                 | Primary session coordinator — delegates to Planner and Workhorse                   |
 | `.kilo/agents/01_architect.md`               | Planning & review agent definition (Planner)                                       |
 | `.kilo/agents/02_workhorse.md`               | Implementation & testing agent definition (Workhorse)                              |

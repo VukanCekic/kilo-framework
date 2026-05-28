@@ -2,6 +2,8 @@
 
 A structured, agent-driven framework for AI-assisted software development that preserves project context across sessions and enforces systematic coding, testing, and debugging protocols.
 
+**New to this framework?** Start with [`QUICKSTART.md`](./QUICKSTART.md) — exact copy-paste prompts to verify subagent models and run your first Plan → Implement session.
+
 ---
 
 ## Table of Contents
